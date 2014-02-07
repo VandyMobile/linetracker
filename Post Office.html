@@ -67,30 +67,46 @@
 			<div class="row">
 			  <div class="col-lg-6">
 				<div class="input-group">
-				  <input placeholder="Enter a value from 0 to 90" type="number" class="form-control" id="user-input" min="0" max="90">
+				  <input placeholder="Enter a value from 0 to 90" type="number" class="form-control" id="input">
 				  <span class="input-group-btn">
 					<button class="btn btn-default" type="submit" onclick="SubmitFxn()">Submit</button>
 					
 					<script>
 						function SubmitFxn(){
-							var user_input = document.getElementById("user-input").value;
-							document.getElementById("user-input").value = "";
-							if(user_input < 0 || user_input > 90){
-								  $(document).trigger("add-alerts", [
+							$(document).trigger("clear-alerts");
+							var user_input = document.getElementById("input").value;
+							document.getElementById("input").value = "";
+							if(!user_input){ 	<!-- user_input is NAN -->
+								$(document).trigger("add-alerts", [
 									{
-									  'message': "Please input a value between 0 and 90.",
+									  'message': "Please enter a valid number.",
 									  'priority': 'danger'
 									}
 								  ]);
-								<!--alert("Please input a value between 0 and 90.");--> 
+							}	
+							else if(user_input < 0 || user_input > 90){
+							  $(document).trigger("add-alerts", [
+								{
+								  'message': "Please input a value between 0 and 90.",
+								  'priority': 'warning'
 								}
-							if(!user_input)
-								alert("Please enter a valid number.");
-						}	
+							  ]);
+							}
+							else{
+								<!-- valid_input refers to a valid number input. It should be stored, not user_input. -->
+								var valid_input = user_input;
+								$(document).trigger("add-alerts", [
+									{
+									  'message': "Successfully submitted!",
+									  'priority': 'success'
+									}
+								  ]);
+							}
+						}
 					</script>
 				  </span>
 				</div><!-- /input-group -->			
-					<div data-alerts="alerts" data-titles="{'danger': '<em>Danger!</em>'}" data-ids="myid"></div>				
+					<div data-alerts="alerts"></div>				
 			  </div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
 		</div>
