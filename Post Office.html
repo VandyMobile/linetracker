@@ -49,20 +49,7 @@
     <div class="container">
 		<div class="well well-lg">
 			<h1 style="font-family:sans-serif; font-size:50px;">Post Office</h1>
-			<p><h3>These are the most recently submitted wait times:</h3></p>
-			<ul class="list-group">
 			
-			<!-- Replace with collected data -->
-			  <li class="list-group-item">
-				<span class="badge">15 minutes ago</span>
-				25 minutes
-			  </li>
-			  <li class="list-group-item">
-				<span class="badge">27 minutes ago</span>
-				32 minutes
-			  </li>
-			  
-			</ul>
 			<p><h3>Here you can submit the approximate wait time:</h3></p>
 			<div class="row">
 			  <div class="col-lg-6">
@@ -93,8 +80,8 @@
 							  ]);
 							}
 							else{
-								<!-- valid_input refers to a valid number input. It should be stored, not user_input. -->
-								var valid_input = user_input;
+								<!-- waitTime refers to a valid number input. It should be stored, not user_input. -->
+								var waitTime = user_input;
 								$(document).trigger("add-alerts", [
 									{
 									  'message': "Successfully submitted!",
@@ -109,6 +96,23 @@
 					<div data-alerts="alerts"></div>				
 			  </div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
+			<p><h3>Current estimated wait time:</h3></p>
+			<!-- Replace with estimate -->
+			
+			<p><h3>These are the most recently submitted wait times:</h3></p>
+			<ul class="list-group">
+			
+			<!-- Replace with collected data -->
+			  <li class="list-group-item">
+				<span class="badge">15 minutes ago</span>
+				25 minutes
+			  </li>
+			  <li class="list-group-item">
+				<span class="badge">27 minutes ago</span>
+				32 minutes
+			  </li>
+			  
+			</ul>
 		</div>
     </div><!-- /.container -->
 
