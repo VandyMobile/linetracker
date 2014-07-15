@@ -1,9 +1,4 @@
 //Data submission
-$("input").keyup(function(event){
-    if(event.keyCode == 13){
-        SubmitFxn();
-    }
-});
 function SubmitFxn(){
     $(document).trigger("clear-alerts");
     var user_input = document.getElementById("input").value;
