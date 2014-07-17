@@ -1,3 +1,3 @@
 <?php 
-include("header.html");
-include("post_office.html"); ?>
+include("./resources/header.html");
+include("./resources/post_office.html"); ?>

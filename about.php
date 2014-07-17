@@ -1,3 +1,3 @@
 <?php 
-include("header.html");
-include("about.html"); ?>
+include("./resources/header.html");
+include("./resources/about.html"); ?>
