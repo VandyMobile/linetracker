@@ -1,0 +1,32 @@
+    <script src="./resources/javascript.js"></script>
+    <div class="container">
+        <div class="well well-lg">
+            <h1 style="font-family:sans-serif; font-size:50px;">Post Office</h1>
+            
+            <p><h3>Here you can submit the approximate wait time (in minutes):</h3></p>
+            <div class="row">
+              <div class="col-lg-6">
+                <form onsubmit="SubmitFxn();return false;">
+                    <div class="input-group">
+                        <input placeholder="Enter a value from 0 to 90" type="number" class="form-control" id="input"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="submitBtn" type="submit">Submit</button>
+                        </span>
+                    </div><!-- /input-group -->    
+                </form> 
+                <div data-alerts="alerts"></div>				
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+            <p><h3>Most recently submitted wait times:</h3></p>
+            <h4 id="empty" style="color:red">
+                <!-- No data message here -->
+            </h4>
+            <ul class="list-group" id="recent">
+                <!-- Recently submitted times here -->
+            </ul>
+        </div>
+    </div><!-- /.container -->
+    
+  </body>
+  
+</html>
