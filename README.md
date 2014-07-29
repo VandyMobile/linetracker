@@ -1,4 +1,4 @@
 linetracker
 ===========
 
-A web app that uses crowdsourced data to track lines on the Vanderbilt campus. Hosted at vandylines.herokuapp.com
+A web app that uses crowdsourced data to track lines on the Vanderbilt campus
