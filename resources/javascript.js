@@ -1,49 +1,75 @@
 //Data submission
 function SubmitFxn(){
-    $(document).trigger("clear-alerts");
+    $('.alert').alert('close');
     var user_input = document.getElementById("input").value;
     document.getElementById("input").value = "";
-    if(!user_input){ 	//user_input is NAN
+    if(checkCookie()){
         $(document).trigger("add-alerts", [
-            {
-              'message': "Please enter a valid number.",
-              'priority': 'danger'
-            }
-          ]);
-    }	
-    else if(user_input < 0 || user_input > 90){
-      $(document).trigger("add-alerts", [
-        {
-          'message': "Please input a value between 0 and 90.",
-          'priority': 'warning'
+                {
+                  'message': "You can only submit data every 30 minutes.",
+                  'priority': 'danger'
+                }
+            ]);
+    }else{
+        if(!user_input){ 	//user_input is NaN
+            $(document).trigger("add-alerts", [
+                {
+                  'message': "Please enter a valid number.",
+                  'priority': 'danger'
+                }
+            ]);
+        }	
+        else if(user_input < 0 || user_input > 90){
+            $(document).trigger("add-alerts", [
+                {
+                  'message': "Please input a value between 0 and 90.",
+                  'priority': 'warning'
+                }
+            ]);
         }
-      ]);
+        else{
+            var waitTime = user_input;
+            waitTime = waitTime * 60;    //converts time into seconds
+            
+            var time = new Date();
+            time.setTime(time.getTime() + 1000*1800);   //adds 30 minutes to current time
+            var expires = time.toGMTString();
+            document.cookie="submitted=1; expires=" + expires;
+            
+            $.ajax({
+                type: "POST",
+                url: "insert.php",
+                data: {'waittime': waitTime},
+            }); 
+            
+            $(document).trigger("add-alerts", [
+                {
+                  'message': "Successfully submitted!",
+                  'priority': 'success'
+                }
+            ]);
+        }
     }
-    else{
-        var waitTime = user_input;
-        waitTime = waitTime * 60;    //converts time into seconds
-        
-        $.ajax({
-            url: "http://127.0.0.1:8080/linetracker/api/line/1/submittime/"+waitTime
-        });
-        
-        $(document).trigger("add-alerts", [
-            {
-              'message': "Successfully submitted!",
-              'priority': 'success'
-            }
-          ]);
-    }
-}
+};
 
-//Display estimate and recent times
-var summary;
-$.getJSON('http://localhost:8080/linetracker/api/line/1/summary', function(data){
-    var estimate = Math.floor(data.estimatedTime / 60);  //converts time to minutes
-    $('li#estimate.list-group-item').append(estimate + ' minutes');
+function checkCookie(){
+    var cookieArray = document.cookie.split(';');
+    for(var i=0; i<cookieArray.length; i++){
+        var cook = cookieArray[i];
+        if(cook.indexOf('submitted=') != -1) return true;
+    }
+    return false;
+};
+
+  //Display recently submitted times
+$.getJSON('retrieve.php', function(data){
+    if($.isEmptyObject(data))
+    {
+        $('h4#empty').append("No data to display");
+    }else{
     var recent = "";
-    for(var i in data.recentTimes){
-        var timeSince = Math.floor((Math.floor((new Date()).getTime()/1000) - data.recentTimes[i].timeStamp)/60);    //calculates time in minutes since submission
+    for(var i in data){
+        var timeSince = Math.floor((Math.ceil((new Date()).getTime()/1000) - data[i].UnixTime)/60);    //calculates time in minutes since submission
         recent+='<li class="list-group-item"><span class="badge">';
         if(timeSince < 60)
             recent+= timeSince + ' minutes ago</span>';
@@ -53,7 +79,8 @@ $.getJSON('http://localhost:8080/linetracker/api/line/1/summary', function(data)
             timeSince = Math.floor(timeSince/60);
             recent+= timeSince + ' hours ago</span>';
         }
-        recent+= Math.floor(data.recentTimes[i].waitTime/60) + ' minutes</li>';
+        recent+= Math.floor(data[i].WaitTime/60) + ' minutes</li>';
     }
     $('ul#recent.list-group').append(recent);
-});
+    }
+});  
