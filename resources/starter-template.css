@@ -2,6 +2,10 @@ body {
   padding-top: 0px;
   font-family: Droid Sans, sans-serif;
 }
+
+h1, h2, h3, h4, h5, h6{
+    font-family: Droid Sans, sans-serif;
+}
 .starter-template {
   padding: 40px 15px;
   text-align: center;
