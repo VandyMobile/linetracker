@@ -3,12 +3,36 @@ body {
   font-family: Droid Sans, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6 {
     font-family: Droid Sans, sans-serif;
 }
 .starter-template {
   padding: 40px 15px;
   text-align: center;
+}
+
+.big-header {
+    font-size: 50px;
+}
+
+.about-paragraph {
+    font-size: 20px;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+#vandy {
+    font-family: 'Lobster', cursive;
+}
+
+#lines {
+    font-family: 'Oleo Script', cursive;
+}
+
+#empty {
+    color: red;
 }
 
 .navbar-toggle .icon-bar:nth-of-type(3) {
