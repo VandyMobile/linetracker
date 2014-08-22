@@ -14,7 +14,7 @@ if (mysqli_connect_errno()) {
 }
 mysqli_select_db($link, $db);
 
-$query = "SELECT * FROM PostOffice WHERE TIMESTAMPDIFF(WEEK, Submitted, NOW()) <= 1 LIMIT 10";
+$query = "SELECT * FROM PostOffice WHERE TIMESTAMPDIFF(WEEK, Submitted, NOW()) <= 1 ORDER BY UnixTime DESC LIMIT 7";
 $result=mysqli_query($link, $query);
 if(!$result){
     mysqli_error($link);
