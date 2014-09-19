@@ -65,22 +65,33 @@ function checkCookie(){
 $.getJSON('retrieve.php', function(data){
     if($.isEmptyObject(data))
     {
-        $('h4#empty').append("No data to display");
+        $('h4#empty').append("No recent data");
+        $('h4#avg').append("No recent data");
     }else{
-    var recent = "";
-    for(var i in data){
-        var timeSince = Math.floor((Math.ceil((new Date()).getTime()/1000) - data[i].UnixTime)/60);    //calculates time in minutes since submission
-        recent+='<li class="list-group-item"><span class="badge">';
-        if(timeSince < 60)
-            recent+= timeSince + ' minutes ago</span>';
-        else if(timeSince > 1440)
-            recent+= 'Over 1 day ago</span>';
-        else{
-            timeSince = Math.floor(timeSince/60);
-            recent+= timeSince + ' hours ago</span>';
+        if(data[0] === null)
+        {
+            $('h4#avg').append("No recent data");
+            $('h4#empty').append("No recent data");
+        }else{
+            var roundedAvg = Math.ceil(data[0]/60);
+            $('h4#avg').append(roundedAvg + ' minutes');
         }
-        recent+= Math.floor(data[i].WaitTime/60) + ' minutes</li>';
-    }
-    $('ul#recent.list-group').append(recent);
+        var recent = "";
+        for(i = 1; i < data.length; i++){
+            var timeSince = Math.ceil(((new Date()).getTime()/1000 - data[i].UnixTime)/60);    //calculates time in minutes since submission
+            recent+='<li class="list-group-item"><span class="badge">';
+            if(timeSince === 1)
+                recent+= '1 minute ago</span>';
+            else if(timeSince < 60)
+                recent+= timeSince + ' minutes ago</span>';
+            else if(timeSince > 1440)
+                recent+= 'Over 1 day ago</span>';
+            else{
+                timeSince = Math.floor(timeSince/60);
+                recent+= timeSince + ' hours ago</span>';
+            }
+            recent+= Math.floor(data[i].WaitTime/60) + ' minutes</li>';
+        }
+        $('ul#recent.list-group').append(recent);
     }
 });  
