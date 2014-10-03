@@ -63,7 +63,7 @@ function checkCookie(){
 
   //Display recently submitted times
 $.getJSON('retrieve.php', function(data){
-    if($.isEmptyObject(data))
+    if(data.length === 1)
     {
         $('h4#empty').append("No recent data");
         $('h4#avg').append("No recent data");
@@ -71,7 +71,6 @@ $.getJSON('retrieve.php', function(data){
         if(data[0] === null)
         {
             $('h4#avg').append("No recent data");
-            $('h4#empty').append("No recent data");
         }else{
             var roundedAvg = Math.ceil(data[0]/60);
             $('h4#avg').append(roundedAvg + ' minutes');
